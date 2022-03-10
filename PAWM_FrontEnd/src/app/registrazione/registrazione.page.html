@@ -1,0 +1,77 @@
+<ion-content>
+  <form [formGroup]="userForm" (ngSubmit)="registrazione(userForm.value)" novalidate>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Registrazione</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input formControlName="nome" type="text"></ion-input>
+        </ion-item>
+
+        <ng-container *ngFor="let error of error_msg.nome">
+          <div
+            *ngIf="userForm.get('nome').hasError(error.type) && (userForm.get('nome').dirty || userForm.get('nome').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Cognome</ion-label>
+          <ion-input formControlName="cognome" type="cognome"></ion-input>
+        </ion-item>
+
+        <ng-container *ngFor="let error of error_msg.cognome">
+          <div
+            *ngIf="userForm.get('cognome').hasError(error.type) && (userForm.get('cognome').dirty || userForm.get('cognome').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+
+        <ion-item lines="full">
+          <ion-label positon="fixed">Data Nascita:</ion-label>
+          <ion-input type="date" formControlName="dataNascita"></ion-input>
+        </ion-item>
+
+        <ng-container *ngFor="let error of error_msg.dataNascita">
+          <div
+            *ngIf="userForm.get('dataNascita').hasError(error.type) && (userForm.get('dataNascita').dirty || userForm.get('dataNascita').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+
+        <ng-container *ngFor="let error of error_msg.email">
+          <div
+            *ngIf="userForm.get('email').hasError(error.type) && (userForm.get('email').dirty || userForm.get('email').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Password</ion-label>
+          <ion-input formControlName="password" type="password" required></ion-input>
+        </ion-item>
+
+        <ng-container *ngFor="let error of error_msg.password">
+          <div
+            *ngIf="userForm.get('password').hasError(error.type) && (userForm.get('password').dirty || userForm.get('password').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+
+        <ion-button type="submit" color="success" expand="block" [disabled]="!userForm.valid">Registrati</ion-button>
+
+        <label class="ion-text-center" color="danger">{{errorMsg}}</label>
+        <label class="ion-text-center" color="success">{{successMsg}}</label>
+
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

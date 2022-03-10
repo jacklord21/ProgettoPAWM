@@ -1,0 +1,44 @@
+<ion-content>
+  <form [formGroup]="userForm" (ngSubmit)="login(userForm.value)" novalidate>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Login</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+
+        <ng-container *ngFor="let error of error_msg.email">
+          <div
+            *ngIf="userForm.get('email').hasError(error.type) && (userForm.get('email').dirty || userForm.get('email').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Password</ion-label>
+          <ion-input formControlName="password" type="password" required></ion-input>
+        </ion-item>
+
+        <ng-container *ngFor="let error of error_msg.password">
+          <div
+            *ngIf="userForm.get('password').hasError(error.type) && (userForm.get('password').dirty || userForm.get('password').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+
+        <ion-button size="small" fill="clear" (click)="resetPassword(userForm.value.email)" [disabled]="!userForm.get('email').valid">Password dimenticata?</ion-button>
+
+        <ion-button type="submit" color="success" expand="block" [disabled]="!userForm.valid">LOGIN</ion-button>
+
+        <label class="ion-text-center" color="danger">{{errorMsg}}</label>
+
+        <p class="ion-text-center">Non ancora Registrato? <a (click)="goToRegistrazione()">Registrati</a></p>
+
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>
