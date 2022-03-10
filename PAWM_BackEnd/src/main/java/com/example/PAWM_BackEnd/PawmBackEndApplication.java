@@ -12,10 +12,10 @@ public class PawmBackEndApplication {
 		SpringApplication.run(PawmBackEndApplication.class, args);
 	}
 
-	@Bean
+/*	@Bean
 	public CommandLineRunner init() {
 		return args -> {
 		};
-	}
+	}*/
 
 }
