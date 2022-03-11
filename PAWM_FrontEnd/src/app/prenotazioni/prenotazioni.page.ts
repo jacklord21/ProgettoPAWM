@@ -12,7 +12,7 @@ import { UtenteService } from '../utente.service';
 })
 export class PrenotazioniPage implements OnInit {
 
-  private utente: Utente;
+  utente: Utente;
 
   constructor(
     private router: Router,
@@ -21,15 +21,16 @@ export class PrenotazioniPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.ionicAuthService.userDetails().then(user =>{
-      this.utenteService.login(user.email).subscribe((data: Utente) => this.utente = {
-        id: data.id,
-        nome: data.nome,
-        cognome: data.cognome,
-        dataNascita: data.dataNascita,
-        email: data.email
-      });
-    })
+    this.ionicAuthService.userDetails().then(
+    res => {
+      if(res==undefined || res==null)
+        this.router.navigateByUrl('login').then(() => {});
+      else {
+        this.utenteService.login(res.email).subscribe( ris => {this.utente = ris} )
+    //    this.visible = true;
+      }
+    }
+  )
     console.log("FIN QUI CE STO");
   }
 
