@@ -5,4 +5,5 @@ export interface Evento {
     numeroPosti: number;
     prezzo: number;
     luogo: string;
+    dataSvolgimento: Date;
 }

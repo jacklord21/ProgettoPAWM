@@ -1,6 +1,9 @@
 package com.example.PAWM_BackEnd.entita;
 
+import org.apache.tomcat.jni.Local;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +20,7 @@ public class Evento
     private int numeroPosti;
     private double prezzo;
     private String luogo;
+    private LocalDate dataSvolgimento;
 
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Prenota> partecipanti;
@@ -25,12 +29,13 @@ public class Evento
         this.partecipanti = new HashSet<>();
     }
 
-    public Evento(String nome, String descrizione, int numeroPosti, double prezzo, String luogo) {
+    public Evento(String nome, String descrizione, int numeroPosti, double prezzo, String luogo, LocalDate dataSvolgimento) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.numeroPosti = numeroPosti;
         this.prezzo = prezzo;
         this.luogo = luogo;
+        this.dataSvolgimento = dataSvolgimento;
     }
 
 
@@ -52,5 +57,9 @@ public class Evento
 
     public String getLuogo() {
         return this.luogo;
+    }
+
+    public LocalDate getDataSvolgimento() {
+        return this.dataSvolgimento;
     }
 }
