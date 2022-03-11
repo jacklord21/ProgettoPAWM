@@ -15,7 +15,7 @@ export class EventoService {
     this.url = 'http://localhost:8080/'
   }
 
-  public getAll(): Observable<Evento[]> {
+  public getDisponibili(): Observable<Evento[]> {
     return this.client.get<Evento[]>(this.url + 'eventi');
   }
 }
