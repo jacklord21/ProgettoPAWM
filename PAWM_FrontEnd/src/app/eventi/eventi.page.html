@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Eventi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content>
+
+    <ion-card color="medium" *ngFor="let ev of eventi; let i = index;">
+
+
+      <ion-item color="light">
+        <ion-label> {{ ev.nome }} </ion-label>
+        <ion-button href="http://divini.edu.it" target="blank" fill="outline" slot="end">Prenota</ion-button>
+      </ion-item>
+
+      <ion-card-content>
+        {{ ev.descrizione }}
+      </ion-card-content>
+      <ion-card-content>
+        Prezzo unitario: € {{ ev.prezzo }}
+      </ion-card-content>
+      <ion-card-content>
+        Posti disponibili: {{ ev.numeroPosti }}
+      </ion-card-content>
+    </ion-card>
+
+</ion-content>

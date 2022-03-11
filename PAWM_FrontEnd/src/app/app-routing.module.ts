@@ -19,6 +19,11 @@ const routes: Routes = [
     path: 'prenotazioni',
     loadChildren: () => import('./prenotazioni/prenotazioni.module').then( m => m.PrenotazioniPageModule)
   },
+  {
+    path: 'eventi',
+    loadChildren: () => import('./eventi/eventi.module').then( m => m.EventiPageModule)
+  },
+
 ];
 
 @NgModule({
