@@ -1,4 +1,4 @@
-package com.example.PAWM_BackEnd.Repository;
+package com.example.PAWM_BackEnd.repository;
 
 import com.example.PAWM_BackEnd.entita.Utente;
 import org.springframework.data.repository.CrudRepository;
