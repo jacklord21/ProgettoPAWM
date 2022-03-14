@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Storico Prenotazioni</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="arrow-up-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="today-outline" (click)="goToPrenotazioni()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="settings-outline" (click)="goToEditUtente()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="information-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="exit-outline" color="danger" (click)="logOut()"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <div *ngFor="let prenotazione of prenotazioni">
+    <ion-card *ngIf="checkDateBefore(prenotazione)">
+      <ion-img src="{{prenotazione.evento.urlImg}}"></ion-img>
+      <ion-card-header>
+        <ion-card-title>{{prenotazione.evento.nome}}</ion-card-title>
+        <ion-card-subtitle>
+          <ion-icon name="location-outline"></ion-icon>{{prenotazione.evento.luogo}}
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label class="ion-text-wrap">Descrizione: <br>
+            {{prenotazione.evento.descrizione}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Biglietti: {{prenotazione.numPartecipanti}}</ion-label>
+          <ion-label slot="end">€: {{prenotazione.prezzoTot}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon color="danger" name="calendar-outline"></ion-icon>
+          <ion-label>: {{prenotazione.evento.data}}</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
