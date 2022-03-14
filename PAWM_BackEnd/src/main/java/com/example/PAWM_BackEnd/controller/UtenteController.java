@@ -18,12 +18,6 @@ public class UtenteController
         this.ur.save(utente);
     }
 
-    @GetMapping("/dashboard")
-    public Utente login(String email) {
-        System.out.println("EMAIL: " + email);
-        return this.ur.findByEmail(email);
-    }
-
     @RequestMapping(value = "/login/{email}", method = RequestMethod.GET)
     public Utente login(@PathVariable("email") String email){
         System.out.println("Ho ricevuto: "+email);
