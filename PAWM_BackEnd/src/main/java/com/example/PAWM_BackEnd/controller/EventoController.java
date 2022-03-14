@@ -4,17 +4,14 @@ import com.example.PAWM_BackEnd.Repository.EventoRepository;
 import com.example.PAWM_BackEnd.Repository.PrenotaRepository;
 import com.example.PAWM_BackEnd.entita.Evento;
 import com.example.PAWM_BackEnd.entita.Prenota;
-import com.example.PAWM_BackEnd.entita.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-<<<<<<< HEAD
 import java.util.Collection;
-=======
 import java.time.LocalDate;
 import java.util.ArrayList;
->>>>>>> b80ae4ecfbace377a889edc986f399525dfa92cf
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin()
@@ -28,7 +25,13 @@ public class EventoController
 
     @GetMapping("/eventi")
     public List<Evento> getDisponibili() {
-        return new ArrayList<>(this.er.findByDataSvolgimentoAfter(LocalDate.now()));
+        return new ArrayList<>(this.er.findByDataAfter(LocalDate.now()));
+    }
+
+
+    @PostMapping(value = "/eventi")
+    public List<Integer> getPostiRimanenti(@RequestBody List<Evento> eventi) {
+        return eventi.stream().map(this::getPostiDisponibiliOf).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/listaEventiPrenotati/{utenteId}", method = RequestMethod.GET)
@@ -49,5 +52,12 @@ public class EventoController
     public void cancellaPrenotazione(@RequestBody long prenotazioneId) {
         System.out.println("Ho ricevuto la prenotazione: "+prenotazioneId);
         this.pr.deleteById(prenotazioneId);
+    }
+
+    private int getPostiDisponibiliOf(Evento e) {
+        return e.getNumeroPosti() - (
+                this.pr.findByEventoId(e.getId()).stream()
+                        .map(Prenota::getNumPartecipanti)
+                        .reduce(0, Integer::sum));
     }
 }

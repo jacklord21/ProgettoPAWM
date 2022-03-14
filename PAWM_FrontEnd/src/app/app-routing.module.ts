@@ -20,7 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./prenotazioni/prenotazioni.module').then( m => m.PrenotazioniPageModule)
   },
   {
-<<<<<<< HEAD
     path: 'storico',
     loadChildren: () => import('./storico/storico.module').then( m => m.StoricoPageModule)
   },
@@ -28,12 +27,11 @@ const routes: Routes = [
     path: 'edit-utente',
     loadChildren: () => import('./edit-utente/edit-utente.module').then( m => m.EditUtentePageModule)
   },
-=======
+  {
     path: 'eventi',
     loadChildren: () => import('./eventi/eventi.module').then( m => m.EventiPageModule)
   },
 
->>>>>>> b80ae4ecfbace377a889edc986f399525dfa92cf
 ];
 
 @NgModule({

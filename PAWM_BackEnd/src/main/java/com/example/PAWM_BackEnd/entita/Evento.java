@@ -1,9 +1,6 @@
 package com.example.PAWM_BackEnd.entita;
 
-<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-=======
->>>>>>> b80ae4ecfbace377a889edc986f399525dfa92cf
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
@@ -24,12 +21,8 @@ public class Evento
     private int numeroPosti;
     private double prezzo;
     private String luogo;
-<<<<<<< HEAD
     private LocalDate data;
     private String urlImg;
-=======
-    private LocalDate dataSvolgimento;
->>>>>>> b80ae4ecfbace377a889edc986f399525dfa92cf
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -39,21 +32,13 @@ public class Evento
         this.partecipanti = new HashSet<>();
     }
 
-<<<<<<< HEAD
     public Evento(String nome, String descrizione, int numeroPosti, double prezzo, String luogo, LocalDate data) {
-=======
-    public Evento(String nome, String descrizione, int numeroPosti, double prezzo, String luogo, LocalDate dataSvolgimento) {
->>>>>>> b80ae4ecfbace377a889edc986f399525dfa92cf
         this.nome = nome;
         this.descrizione = descrizione;
         this.numeroPosti = numeroPosti;
         this.prezzo = prezzo;
         this.luogo = luogo;
-<<<<<<< HEAD
         this.data = data;
-=======
-        this.dataSvolgimento = dataSvolgimento;
->>>>>>> b80ae4ecfbace377a889edc986f399525dfa92cf
     }
 
     public long getId() {
@@ -80,16 +65,11 @@ public class Evento
         return this.luogo;
     }
 
-<<<<<<< HEAD
     public LocalDate getData() {
         return data;
     }
 
     public String getUrlImg() {
         return urlImg;
-=======
-    public LocalDate getDataSvolgimento() {
-        return this.dataSvolgimento;
->>>>>>> b80ae4ecfbace377a889edc986f399525dfa92cf
     }
 }

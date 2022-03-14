@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import * as moment from 'moment';
@@ -17,12 +17,12 @@ import { UtenteService } from '../utente.service';
 })
 export class PrenotazioniPage implements OnInit {
 
-<<<<<<< HEAD
+  getUtente(): Utente {
+    throw new Error('Method not implemented.');
+  }
+
   private utente: Utente;
   private prenotazioni: Array<Prenotazione> = [];
-=======
-  utente: Utente;
->>>>>>> b80ae4ecfbace377a889edc986f399525dfa92cf
 
   constructor(
     private router: Router,
@@ -33,7 +33,6 @@ export class PrenotazioniPage implements OnInit {
   ) { }
 
   ngOnInit() {
-<<<<<<< HEAD
     this.ionicAuthService.userDetails().then(user => {
       this.utenteService.login(user.email).subscribe((data: Utente) => {
         this.setUtente(data);
@@ -68,7 +67,7 @@ export class PrenotazioniPage implements OnInit {
         })
       })
     })
-=======
+    
     this.ionicAuthService.userDetails().then(
     res => {
       if(res==undefined || res==null)
@@ -80,7 +79,7 @@ export class PrenotazioniPage implements OnInit {
     }
   )
     console.log("FIN QUI CE STO");
->>>>>>> b80ae4ecfbace377a889edc986f399525dfa92cf
+    
   }
 
   getEventi(utente: Utente): Observable<Evento[]> {
