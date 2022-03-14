@@ -5,6 +5,9 @@ import { IonicAuthService } from '../ionic-auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { map } from '@firebase/util';
+import { PrenotazioniPage } from '../prenotazioni/prenotazioni.page';
+import { Utente } from '../utente';
 
 @Component({
   selector: 'app-eventi',
@@ -13,8 +16,8 @@ import { ToastController } from '@ionic/angular';
 })
 export class EventiPage implements OnInit {
 
-  clicked: number
-  eventi: Evento[] = []
+  mappa: Map<Evento, number> 
+  clicked: number;
   partecipantiForm: FormGroup
 
   constructor(
@@ -23,6 +26,7 @@ export class EventiPage implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private toastController: ToastController) {
+      this.mappa = new Map()
   }
 
   ngOnInit() {
@@ -31,14 +35,23 @@ export class EventiPage implements OnInit {
       this.router.navigateByUrl('login')
 
 
-    this.eventoService.getDisponibili().subscribe(ev => {
+    this.eventoService.getEventiDisponibili().subscribe(ev => {
       if(ev.length==0) {
-        this.openToast('danger', 'Nessun evento disponibile.')
-        this.router.navigateByUrl('prenotazioni')
+        this.openToast('danger', 'Nessun evento disponibile.');
+        this.router.navigateByUrl('prenotazioni').then(() => {});
       }
-      else this.eventi = ev;
-    }) ;
+      else {
+        this.eventoService.getPostiRimanenti(ev).toPromise().then(ris => {
+          for(let i=0; i<ev.length; i++) 
+            this.mappa.set(ev[i], ris[i])
+        })
+      }
+    }
+    );
+
     
+ //   alert('VALORE PRIMO: ' + this.postiDisponibili[0])
+
 
     this.partecipantiForm = this.formBuilder.group({
       numPartecipanti: new FormControl('', Validators.compose([
@@ -48,10 +61,10 @@ export class EventiPage implements OnInit {
     });
   }
 
-  prenota(value) {
-
-    
-
+  prenota(evento: Evento, value) {
+  //  let u: Utente = this.prenotazioniPage.getUtente()
+    alert('PRENOTAZIONE\n\nEvento: ' + evento.nome + '\nNumero partecipanti: ' + value.numPartecipanti)
+  //  this.eventoService.prenota(evento, u, value.numPartecipanti)
   }
 
   async openToast(colore: string, messaggio: string) {  
@@ -63,4 +76,8 @@ export class EventiPage implements OnInit {
     toast.present();  
   } 
 
+  dis(i: number) {
+    alert('I: ' + i)
+  }
 }
+
