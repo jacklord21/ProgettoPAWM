@@ -11,7 +11,7 @@
     </ion-fab-button>
     <ion-fab-list side="top">
       <ion-fab-button>
-        <ion-icon name="add"></ion-icon>
+        <ion-icon name="add" (click)="goToEventi()"></ion-icon>
       </ion-fab-button>
       <ion-fab-button>
         <ion-icon name="library-outline" (click)="goToStorico()"></ion-icon>
@@ -20,7 +20,7 @@
         <ion-icon name="settings-outline" (click)="goToEditUtente()"></ion-icon>
       </ion-fab-button>
       <ion-fab-button>
-        <ion-icon name="information-outline"></ion-icon>
+        <ion-icon name="information-outline" (click)="goToInformazioni()"></ion-icon>
       </ion-fab-button>
       <ion-fab-button>
         <ion-icon name="exit-outline" color="danger" (click)="logOut()"></ion-icon>
@@ -38,7 +38,6 @@
 
   <div *ngFor="let prenotazione of prenotazioni; let i = index">
     <ion-card *ngIf="!checkDateBefore(prenotazione)">
-      <ion-img src="{{prenotazione.evento.urlImg}}"></ion-img>
       <ion-card-header>
         <ion-card-title>{{prenotazione.evento.nome}}</ion-card-title>
         <ion-card-subtitle>
@@ -46,6 +45,7 @@
         </ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
+        <ion-img src="{{prenotazione.evento.urlImg}}"></ion-img>
         <ion-item>
           <ion-label class="ion-text-wrap">Descrizione: <br>
             {{prenotazione.evento.descrizione}}</ion-label>

@@ -26,11 +26,23 @@ export class StoricoPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.ionicAuthService.userDetails().then(
+      res => {
+        if (res == undefined || res == null)
+          this.router.navigateByUrl('login').then(() => { });
+        else {
+          this.utenteService.login(res.email).subscribe(user => {
+            this.setPrenotazioni(user);
+          })
+        }
+      }
+    )
+    /*
     this.ionicAuthService.userDetails().then(user => {
       this.utenteService.login(user.email).subscribe((data: Utente) => {
         this.setPrenotazioni(data);
       })
-    })
+    })*/
   }
 
   setPrenotazioni(utente: Utente) {
@@ -65,6 +77,14 @@ export class StoricoPage implements OnInit {
 
   goToEditUtente(){
     this.router.navigateByUrl('edit-utente');
+  }
+
+  goToEventi(){
+    this.router.navigateByUrl('eventi');
+  }
+
+  goToInformazioni(){
+    this.router.navigateByUrl('informazioni');
   }
 
   logOut() {

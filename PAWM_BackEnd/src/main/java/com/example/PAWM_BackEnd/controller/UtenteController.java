@@ -13,6 +13,9 @@ public class UtenteController
     @Autowired
     private UtenteRepository ur;
 
+    @Autowired
+    private EventoController eventoController;
+
     @PutMapping("/registrazione")
     public void add(@RequestBody Utente utente) {
         this.ur.save(utente);
@@ -30,6 +33,13 @@ public class UtenteController
         if(this.ur.findById(utente.getId()).isPresent()) {
             this.ur.save(utente);
         }
+    }
+
+    @PutMapping(value = "/eliminaUtente")
+    public void eliminaUtente(@RequestBody Utente utente) {
+        System.out.println("Utente da eliminare: " +utente.getEmail());
+        this.eventoController.eliminaPrenotazioni(utente);
+        this.ur.deleteById(utente.getId());
     }
 
 }

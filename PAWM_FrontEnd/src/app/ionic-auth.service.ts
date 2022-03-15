@@ -59,6 +59,13 @@ export class IonicAuthService {
     })
   }
 
+  eliminaAccount(){
+    this.userDetails().then(user =>{
+      user.delete();
+      this.openToast("danger", "Account Eliminato correttamente", 5000);
+    })
+  }
+
   aggiornamentoDati(value){
     this.userDetails().then(user => {
       if (value.email != user.email) {
@@ -67,6 +74,7 @@ export class IonicAuthService {
       if (value.password != null) {
         user.updatePassword(value.password);
       }
+      this.openToast("success", "Dati account aggiornati correttamente; Effettuare nuovamente l'accesso", 5000);
     })
   }
 

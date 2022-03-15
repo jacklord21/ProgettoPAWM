@@ -23,7 +23,10 @@ export class UtenteService {
   }
 
   public aggiornaEmail(utente: Utente){
-    console.log("PINO Sè CASCATO: "+utente.id+" AAAA: "+utente.email);
     this.client.put(this.url + 'aggiornaUtente', utente).subscribe();
+  }
+
+  public eliminaAccount(utente: Utente){
+    this.client.put(this.url + 'eliminaUtente', utente).subscribe();
   }
 }

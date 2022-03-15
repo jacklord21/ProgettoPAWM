@@ -25,7 +25,8 @@ export class EventiPage implements OnInit {
     private ionicService : IonicAuthService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private toastController: ToastController) {
+    private toastController: ToastController,
+    private ionicAuthService: IonicAuthService) {
       this.mappa = new Map()
   }
 
@@ -79,5 +80,32 @@ export class EventiPage implements OnInit {
   dis(i: number) {
     alert('I: ' + i)
   }
+
+  goToStorico() {
+    this.router.navigateByUrl('storico');
+  }
+
+  goToPrenotazioni() {
+    this.router.navigateByUrl('prenotazioni');
+  }
+
+  logOut() {
+    this.ionicAuthService.signoutUser()
+      .then(res => {
+        this.router.navigateByUrl('login');
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  goToEditUtente(){
+    this.router.navigateByUrl('edit-utente');
+  }
+
+  goToInformazioni(){
+    this.router.navigateByUrl('informazioni');
+  }
+  
 }
 

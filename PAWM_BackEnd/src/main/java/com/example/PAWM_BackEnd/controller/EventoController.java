@@ -4,6 +4,7 @@ import com.example.PAWM_BackEnd.Repository.EventoRepository;
 import com.example.PAWM_BackEnd.Repository.PrenotaRepository;
 import com.example.PAWM_BackEnd.entita.Evento;
 import com.example.PAWM_BackEnd.entita.Prenota;
+import com.example.PAWM_BackEnd.entita.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,5 +60,9 @@ public class EventoController
                 this.pr.findByEventoId(e.getId()).stream()
                         .map(Prenota::getNumPartecipanti)
                         .reduce(0, Integer::sum));
+    }
+
+    public void eliminaPrenotazioni(Utente utente){
+        this.pr.deleteAll(this.pr.findByUtenteId(utente.getId()));
     }
 }

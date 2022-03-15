@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Informazioni Creator</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="arrow-up-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="add" (click)="goToEventi()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="today-outline" (click)="goToPrenotazioni()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="library-outline" (click)="goToStorico()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="settings-outline" (click)="goToEditUtente()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="exit-outline" color="danger" (click)="logOut()"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Matteucci Giacomo</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-img
+        src="https://scontent.fpsr1-1.fna.fbcdn.net/v/t1.6435-9/119676504_2488631088095866_2962250804685010946_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=Y35j44-gamAAX9GeYf1&_nc_ht=scontent.fpsr1-1.fna&oh=00_AT9A7S-LlchCT0hyOM-qG00do3al-SFInN66Oe0b3r116A&oe=62537806">
+      </ion-img>
+      <ion-item>
+        <ion-label>E-mail:<br>
+          giacomo.matteucci@studenti.unicam.it</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Scrivi una e-mail a Giacomo</ion-label>
+        <ion-icon slot="end" name="send-outline" (click)="sendEmail('giacomo.matteucci@studenti.unicam.it')"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Pittori Leonardo</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-img src="https://scontent.fpsr1-1.fna.fbcdn.net/v/t1.18169-9/16142905_1830162357240632_8342520298205869928_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=qwx-MmZ4TKgAX8zNyWe&_nc_ht=scontent.fpsr1-1.fna&oh=00_AT-PtJ9AdtZLwJZ3oSkbgpBKHgmX6iG4JnqkwWaLkm8oQQ&oe=625399F6"></ion-img>
+      <ion-item>
+        <ion-label>E-mail:<br>
+          leonardo.pittori@studenti.unicam.it</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Scrivi una e-mail a Leonardo</ion-label>
+        <ion-icon slot="end" name="send-outline" (click)="sendEmail('leonardo.pittori@studenti.unicam.it')"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

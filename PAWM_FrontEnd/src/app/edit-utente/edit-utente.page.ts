@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { AlertController } from '@ionic/angular';
 import { IonicAuthService } from '../ionic-auth.service';
 import { Utente } from '../utente';
 import { UtenteService } from '../utente.service';
@@ -15,8 +15,6 @@ export class EditUtentePage implements OnInit {
 
   private utente: Utente;
   private userForm: FormGroup;
-  private successMsg: string = '';
-  private errorMsg: string = '';
 
   private error_msg ={
     'email': [
@@ -42,20 +40,21 @@ export class EditUtentePage implements OnInit {
     private ionicAuthService: IonicAuthService,
     private utenteService: UtenteService,
     private fb: FormBuilder,
+    private alertController: AlertController,
   ) { }
 
   ngOnInit() {
-    this.ionicAuthService.userDetails().then(user => {
-      this.utenteService.login(user.email).subscribe((data: Utente) => {
-        this.utente = {
-          id: data.id,
-          nome: data.nome,
-          cognome: data.cognome,
-          dataNascita: data.dataNascita,
-          email: data.email
+    this.ionicAuthService.userDetails().then(
+      res => {
+        if (res == undefined || res == null)
+          this.router.navigateByUrl('login').then(() => { });
+        else {
+          this.utenteService.login(res.email).subscribe(user => {
+            this.utente = user;
+          })
         }
-      })
-    })
+      }
+    )
     this.userForm = this.fb.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
@@ -71,9 +70,32 @@ export class EditUtentePage implements OnInit {
     let newUtente: Utente = this.utente;
     newUtente.email = value.email;
     this.utenteService.aggiornaEmail(newUtente);
-    console.log("PEPPE Sè CASCATO: "+this.utente.id+"AAAA: "+value.email);
     this.ionicAuthService.aggiornamentoDati(value);
-    console.log("Qui ce so riato");
+    this.router.navigateByUrl('login');
+  }
+
+  cancellaAccount(){
+    this.alertController.create({
+      header: 'Conferma cancellazione',
+      message: 'Sei sicuro di voler cancellare l\'account?',
+      buttons: [
+        {
+          text: 'Annulla',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Conferma',
+          handler: () => {
+            this.ionicAuthService.eliminaAccount();
+            this.utenteService.eliminaAccount(this.utente);
+            this.logOut();
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
   }
 
   goToStorico() {
@@ -93,4 +115,13 @@ export class EditUtentePage implements OnInit {
         console.log(error);
       })
   }
+
+  goToEventi(){
+    this.router.navigateByUrl('eventi');
+  }
+
+  goToInformazioni(){
+    this.router.navigateByUrl('informazioni');
+  }
+  
 }

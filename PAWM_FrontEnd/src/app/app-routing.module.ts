@@ -30,7 +30,11 @@ const routes: Routes = [
   {
     path: 'eventi',
     loadChildren: () => import('./eventi/eventi.module').then( m => m.EventiPageModule)
+  },  {
+    path: 'informazioni',
+    loadChildren: () => import('./informazioni/informazioni.module').then( m => m.InformazioniPageModule)
   },
+
 
 ];
 

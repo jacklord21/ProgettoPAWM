@@ -1,6 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { Evento } from '../evento';
@@ -29,26 +29,23 @@ export class PrenotazioniPage implements OnInit {
     private ionicAuthService: IonicAuthService,
     private utenteService: UtenteService,
     private prenotazioneService: PrenotazioneService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
-    this.ionicAuthService.userDetails().then(user => {
-      this.utenteService.login(user.email).subscribe((data: Utente) => {
-        this.setUtente(data);
-        this.setPrenotazioni(data);
-      })
-    })
-  }
-
-  setUtente(data: Utente) {
-    this.utente = {
-      id: data.id,
-      nome: data.nome,
-      cognome: data.cognome,
-      dataNascita: data.dataNascita,
-      email: data.email
-    }
+    this.ionicAuthService.userDetails().then(
+      res => {
+        if (res == undefined || res == null)
+          this.router.navigateByUrl('login').then(() => { });
+        else {
+          this.utenteService.login(res.email).subscribe(user => {
+            this.utente = user;
+            this.setPrenotazioni(user);
+          })
+        }
+      }
+    )
   }
 
   setPrenotazioni(utente: Utente) {
@@ -67,19 +64,6 @@ export class PrenotazioniPage implements OnInit {
         })
       })
     })
-    
-    this.ionicAuthService.userDetails().then(
-    res => {
-      if(res==undefined || res==null)
-        this.router.navigateByUrl('login').then(() => {});
-      else {
-        this.utenteService.login(res.email).subscribe( ris => {this.utente = ris} )
-    //    this.visible = true;
-      }
-    }
-  )
-    console.log("FIN QUI CE STO");
-    
   }
 
   getEventi(utente: Utente): Observable<Evento[]> {
@@ -104,15 +88,15 @@ export class PrenotazioniPage implements OnInit {
         {
           text: 'Annulla',
           handler: () => {
-            console.log('Annullato');
+            this.openToast("danger", "Cancellazione prenotazione annullata", 1000);
           }
         },
         {
           text: 'Conferma',
           handler: () => {
-            console.log('Prenotazione: ' + prenotazione.evento.nome + ' cancellata');
             this.prenotazioneService.cancellaPrenotazione(prenotazione);
             this.prenotazioni.splice(indice, 1);
+            this.openToast("success", "Cancellazione prenotazione all'evento: "+prenotazione.evento.nome+" effettuata", 1000);
           }
         }
       ]
@@ -129,8 +113,25 @@ export class PrenotazioniPage implements OnInit {
     this.router.navigateByUrl('storico');
   }
 
-  goToEditUtente(){
+  goToEditUtente() {
     this.router.navigateByUrl('edit-utente');
+  }
+
+  goToEventi(){
+    this.router.navigateByUrl('eventi');
+  }
+
+  goToInformazioni(){
+    this.router.navigateByUrl('informazioni');
+  }
+
+  private async openToast(colore: string, messaggio: string, durata: number) {
+    const toast = await this.toastController.create({
+      color: colore,
+      message: messaggio,
+      duration: durata,
+    });
+    toast.present();
   }
 
 }
