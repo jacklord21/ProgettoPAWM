@@ -18,7 +18,7 @@ import { UtenteService } from '../utente.service';
 export class PrenotazioniPage implements OnInit {
 
   utente: Utente;
-  prenotazioni: Array<Prenotazione> = [];
+  prenotazioni: Array<Prenotazione>;
 
   constructor(
     private router: Router,
@@ -30,6 +30,10 @@ export class PrenotazioniPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    
+  }
+
+  ionViewDidEnter(){
     this.ionicAuthService.userDetails().then(
       res => {
         if (res == undefined || res == null)
@@ -45,6 +49,7 @@ export class PrenotazioniPage implements OnInit {
   }
 
   setPrenotazioni(utente: Utente) {
+    this.prenotazioni = [];
     var auxPrenotazione: Prenotazione;
     this.getEventi(utente).subscribe(eventi => {
       eventi.forEach(eventoAux => {
@@ -114,7 +119,7 @@ export class PrenotazioniPage implements OnInit {
   }
 
   goToEventi(){
-    this.router.navigateByUrl('eventi').then(() => window.location.reload());
+    this.router.navigateByUrl('eventi');
   }
 
   goToInformazioni(){

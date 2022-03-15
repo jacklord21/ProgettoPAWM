@@ -36,10 +36,15 @@ public class EventoController
 
         Utente u = this.ur.findByEmail(email);
         Evento e = this.er.findById(eventoId).orElse(null);
-        if(u==null || e ==null || this.pr.findByUtenteIdAndEventoId(u.getId(), e.getId())!=null)
+        if(u==null || e ==null)
             return false;
-
-        this.pr.save(new Prenota(u, e, LocalDate.now(), partecipanti));
+        if(this.pr.existsByUtenteIdAndEventoId(u.getId(), e.getId())){
+            Prenota prenota = this.pr.findByUtenteIdAndEventoId(u.getId(), e.getId());
+            prenota.addPartecipanti(partecipanti);
+            this.pr.save(prenota);
+        }else {
+            this.pr.save(new Prenota(u, e, LocalDate.now(), partecipanti));
+        }
         return true;
     }
 

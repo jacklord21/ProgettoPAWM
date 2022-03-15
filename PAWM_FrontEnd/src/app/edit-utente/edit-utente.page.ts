@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { IonicAuthService } from '../ionic-auth.service';
 import { Utente } from '../utente';
 import { UtenteService } from '../utente.service';
@@ -89,7 +89,7 @@ export class EditUtentePage implements OnInit {
           handler: () => {
             this.ionicAuthService.eliminaAccount();
             this.utenteService.eliminaAccount(this.utente);
-            this.logOut();
+            this.router.navigateByUrl('login');
           }
         }
       ]

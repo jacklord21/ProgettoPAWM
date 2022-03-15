@@ -5,9 +5,6 @@ import { IonicAuthService } from '../ionic-auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
-import { map } from '@firebase/util';
-import { PrenotazioniPage } from '../prenotazioni/prenotazioni.page';
-import { Utente } from '../utente';
 
 @Component({
   selector: 'app-eventi',
@@ -40,7 +37,7 @@ export class EventiPage implements OnInit {
 
     this.eventoService.getEventiDisponibili().subscribe(ev => {
       if(ev.length==0) {
-        this.openToast('danger', 'Nessun evento disponibile.');
+        this.openToast('danger', 'Nessun evento disponibile.', 2000);
         this.router.navigateByUrl('prenotazioni').then(() => {});
       }
       else {
@@ -68,19 +65,19 @@ export class EventiPage implements OnInit {
     this.ionicService.userDetails().then(ris => {
      this.eventoService.prenota(ris.email, evento, value.numPartecipanti).subscribe(ris => {
        if(ris) {
-         this.openToast('success', 'Prenotazione effettuata.')
+         this.openToast('success', 'Prenotazione effettuata.', 1000)
          this.router.navigateByUrl('prenotazioni').then(() => {})
        }
-       else this.openToast('danger', 'La prenotazione non e\' andata a buon fine.')
+       else this.openToast('danger', 'La prenotazione non e\' andata a buon fine.', 3000)
      })
     })
    }
 
-  async openToast(colore: string, messaggio: string) {  
+  async openToast(colore: string, messaggio: string, durata: number) {  
     const toast = await this.toastController.create({  
       color: colore,
       message: messaggio,   
-      duration: 4000  
+      duration: durata 
     });  
     toast.present();  
   } 

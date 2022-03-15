@@ -49,4 +49,8 @@ public class Prenota
     public LocalDate getData() {
         return data;
     }
+
+    public void addPartecipanti(int aggiunta){
+        this.numPartecipanti += aggiunta;
+    }
 }

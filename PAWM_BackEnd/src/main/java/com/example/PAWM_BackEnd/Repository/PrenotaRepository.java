@@ -12,4 +12,5 @@ public interface PrenotaRepository extends CrudRepository<Prenota, Long> {
     List<Prenota> findByUtenteId(long utenteId);
     List<Prenota> findByEventoId(long id);
     Prenota findByUtenteIdAndEventoId(long utenteId, long eventoId);
+    boolean existsByUtenteIdAndEventoId(long utenteId, long eventoId);
 }
