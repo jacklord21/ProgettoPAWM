@@ -32,9 +32,11 @@ export class EventiPage implements OnInit {
 
   ngOnInit() {
     
-    if(this.ionicService.userDetails()==undefined)
-      this.router.navigateByUrl('login')
-
+    this.ionicAuthService.userDetails().then(
+      res => {
+        if (res == undefined || res == null)
+          this.router.navigateByUrl('login').then(() => { });
+      })
 
     this.eventoService.getEventiDisponibili().subscribe(ev => {
       if(ev.length==0) {
@@ -63,10 +65,16 @@ export class EventiPage implements OnInit {
   }
 
   prenota(evento: Evento, value) {
-  //  let u: Utente = this.prenotazioniPage.getUtente()
-    alert('PRENOTAZIONE\n\nEvento: ' + evento.nome + '\nNumero partecipanti: ' + value.numPartecipanti)
-  //  this.eventoService.prenota(evento, u, value.numPartecipanti)
-  }
+    this.ionicService.userDetails().then(ris => {
+     this.eventoService.prenota(ris.email, evento, value.numPartecipanti).subscribe(ris => {
+       if(ris) {
+         this.openToast('success', 'Prenotazione effettuata.')
+         this.router.navigateByUrl('prenotazioni').then(() => {})
+       }
+       else this.openToast('danger', 'La prenotazione non e\' andata a buon fine.')
+     })
+    })
+   }
 
   async openToast(colore: string, messaggio: string) {  
     const toast = await this.toastController.create({  

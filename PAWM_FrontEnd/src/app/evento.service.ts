@@ -23,7 +23,8 @@ export class EventoService {
     return this.client.post<number[]>(this.url + 'eventi', eventi);
   }
 
-  public prenota(evento: Evento, utente: Utente, partecipanti: number) {
-    return this.client.put<number[]>(this.url + 'eventi', {evento, utente, partecipanti});
-  }
+  public prenota(email: string, evento: Evento, partecipanti: number): Observable<boolean> {
+    //   alert('Prenota raggiunto.\nEmail: ' + email + '\nEvento: ' + evento.nome + '\nPartecipanti: ' + partecipanti)
+       return this.client.post<boolean>(this.url + 'prenota/' + email + '/' + evento.id + '/' + partecipanti, null);
+     }
 }

@@ -2,6 +2,7 @@ package com.example.PAWM_BackEnd.controller;
 
 import com.example.PAWM_BackEnd.Repository.EventoRepository;
 import com.example.PAWM_BackEnd.Repository.PrenotaRepository;
+import com.example.PAWM_BackEnd.Repository.UtenteRepository;
 import com.example.PAWM_BackEnd.entita.Evento;
 import com.example.PAWM_BackEnd.entita.Prenota;
 import com.example.PAWM_BackEnd.entita.Utente;
@@ -18,17 +19,29 @@ import java.util.stream.Collectors;
 @CrossOrigin()
 public class EventoController
 {
-    @Autowired
-    private EventoRepository er;
-
-    @Autowired
-    private PrenotaRepository pr;
+    @Autowired private EventoRepository er;
+    @Autowired private PrenotaRepository pr;
+    @Autowired private UtenteRepository ur;
 
     @GetMapping("/eventi")
     public List<Evento> getDisponibili() {
-        return new ArrayList<>(this.er.findByDataAfter(LocalDate.now()));
+        return this.er.findByDataAfter(LocalDate.now()).stream()
+                .filter(e -> this.getPostiDisponibiliOf(e)>0)
+                //     .filter(e -> this.pr.findByUtenteIdAndEventoId(1L, e.getId())!=null)
+                .collect(Collectors.toList());
     }
 
+    @PostMapping(value = "/prenota/{email}/{eventoId}/{partecipanti}")
+    public boolean prenota(@PathVariable("email") String email, @PathVariable("eventoId") long eventoId, @PathVariable("partecipanti")int partecipanti) {
+
+        Utente u = this.ur.findByEmail(email);
+        Evento e = this.er.findById(eventoId).orElse(null);
+        if(u==null || e ==null || this.pr.findByUtenteIdAndEventoId(u.getId(), e.getId())!=null)
+            return false;
+
+        this.pr.save(new Prenota(u, e, LocalDate.now(), partecipanti));
+        return true;
+    }
 
     @PostMapping(value = "/eventi")
     public List<Integer> getPostiRimanenti(@RequestBody List<Evento> eventi) {
