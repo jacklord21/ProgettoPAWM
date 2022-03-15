@@ -17,12 +17,8 @@ import { UtenteService } from '../utente.service';
 })
 export class PrenotazioniPage implements OnInit {
 
-  getUtente(): Utente {
-    throw new Error('Method not implemented.');
-  }
-
-  private utente: Utente;
-  private prenotazioni: Array<Prenotazione> = [];
+  utente: Utente;
+  prenotazioni: Array<Prenotazione> = [];
 
   constructor(
     private router: Router,
@@ -39,7 +35,7 @@ export class PrenotazioniPage implements OnInit {
         if (res == undefined || res == null)
           this.router.navigateByUrl('login').then(() => { });
         else {
-          this.utenteService.login(res.email).subscribe(user => {
+          this.utenteService.login(res.email).subscribe((user: Utente) => {
             this.utente = user;
             this.setPrenotazioni(user);
           })
@@ -118,7 +114,7 @@ export class PrenotazioniPage implements OnInit {
   }
 
   goToEventi(){
-    this.router.navigateByUrl('eventi');
+    this.router.navigateByUrl('eventi').then(() => window.location.reload());
   }
 
   goToInformazioni(){
