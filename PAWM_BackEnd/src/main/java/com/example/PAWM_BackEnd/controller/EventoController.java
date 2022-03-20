@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin()
+@CrossOrigin(origins = "http://localhost:8100")
 public class EventoController
 {
     @Autowired private EventoRepository er;
